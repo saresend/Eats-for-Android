@@ -8,10 +8,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.samresendez.usceats.MainActivity$PlaceholderFragment">
 
+
     <TextView
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
+        android:paddingBottom="50dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text = "I'm here to test the power of the uiTextView\n And this is here to try spaces"
+        android:id="@+id/menuTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/section_label"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>

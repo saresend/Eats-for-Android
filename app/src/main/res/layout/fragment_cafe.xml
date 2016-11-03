@@ -5,6 +5,7 @@
     tools:context="com.example.samresendez.usceats.cafeFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:id="@+id/cafeNameTextView"
         android:layout_marginTop="10dp"

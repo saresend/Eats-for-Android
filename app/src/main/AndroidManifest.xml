@@ -10,7 +10,7 @@
         android:theme="@android:style/Theme.Holo">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:label="\tEats for Android"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

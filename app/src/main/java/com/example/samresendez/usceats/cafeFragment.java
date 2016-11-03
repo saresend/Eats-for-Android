@@ -1,6 +1,7 @@
 package com.example.samresendez.usceats;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import org.w3c.dom.Text;
  * create an instance of this fragment.
  */
 public class cafeFragment extends Fragment {
+
 
 
 
@@ -70,6 +72,17 @@ public class cafeFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         TextView cafeTextView = (TextView) getView().findViewById(R.id.cafeNameTextView);
         cafeTextView.setText(cafeName);
+        if(cafeName == "EVK") {
+            this.getView().setBackgroundColor(Color.parseColor("#4CAF50"));
+        }
+        else if(cafeName == "Parkside") {
+
+            this.getView().setBackgroundColor(Color.parseColor("#FF9800"));
+        }
+        else if(cafeName == "Cafe 84") {
+            this.getView().setBackgroundColor(Color.parseColor("#03A9F4"));
+        }
+
         super.onViewCreated(view, savedInstanceState);
     }
 
