@@ -6,6 +6,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,11 @@ import org.w3c.dom.Text;
  * create an instance of this fragment.
  */
 public class cafeFragment extends Fragment {
+
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
 
 
@@ -55,6 +63,10 @@ public class cafeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.menuListRecyclerView);
+        mLayoutManager = new LinearLayoutManager(this.getContext());
+        //mRecyclerView.setLayoutManager(mLayoutManager);
+
         if (getArguments() != null) {
             cafeName = getArguments().getString(ARG_PARAM1);
         }
@@ -70,16 +82,19 @@ public class cafeFragment extends Fragment {
 
     @Override //The view is successfully built from this point forward: Place UI stuff here!
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        TextView cafeTextView = (TextView) getView().findViewById(R.id.cafeNameTextView);
-        cafeTextView.setText(cafeName);
+        CardView cardView = (CardView) this.getView().findViewById(R.id.titleCard);
+        TextView cardTitle = (TextView) cardView.findViewById(R.id.cardTextView);
+        cardTitle.setText(cafeName);
         if(cafeName == "EVK") {
+            cardView.setBackground(getContext().getDrawable(R.mipmap.evkimage));
             this.getView().setBackgroundColor(Color.parseColor("#4CAF50"));
         }
         else if(cafeName == "Parkside") {
-
+            cardView.setBackground(getContext().getDrawable(R.mipmap.parkside));
             this.getView().setBackgroundColor(Color.parseColor("#FF9800"));
         }
         else if(cafeName == "Cafe 84") {
+            cardView.setBackground(getContext().getDrawable(R.mipmap.cafe84));
             this.getView().setBackgroundColor(Color.parseColor("#03A9F4"));
         }
 

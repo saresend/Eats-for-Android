@@ -2,25 +2,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.samresendez.usceats.cafeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/cafeNameTextView"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Insert cafeteria Name Here!" />
 
-    <TextView
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:text="Today's Rating: "
-        android:id="@+id/ratingTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <android.support.v7.widget.CardView
+        android:id = "@+id/titleCard"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:elevation="20dp"
+        app:cardCornerRadius="4dp"
+        android:layout_height="150dp">
+
+        <TextView
+            android:id = "@+id/cardTextView"
+            android:textColor="@color/colorAccent"
+            android:textSize="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            />
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/menuListRecyclerView"
+        android:layout_below="@id/titleCard"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    </RelativeLayout>
 
 
 

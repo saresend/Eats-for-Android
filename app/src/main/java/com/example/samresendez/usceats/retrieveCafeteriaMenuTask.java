@@ -2,7 +2,17 @@ package com.example.samresendez.usceats;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -18,7 +28,7 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects) {
 
-
+        getURL();
 
 
 
@@ -28,9 +38,11 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
     private URL getURL() {
 
         Calendar now = Calendar.getInstance();
+        int year = now.get(Calendar.YEAR);
         int dayOfWeek = now.get(Calendar.DAY_OF_WEEK);
         int month = now.get(Calendar.MONTH);
         int hourOfDay = now.get(Calendar.HOUR);
+        int day = now.get(Calendar.DATE);
 
         Log.e("Hour, Weekday, month:",Integer.toString(hourOfDay)+Integer.toString(dayOfWeek)+Integer.toString(month));
 
@@ -61,10 +73,28 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
         String urlBase = "https://uscdata.org/eats/v1/menus?where=%7B%22date%22%3A%20%22";
         urlBase = urlBase + weekMap.get(dayOfWeek);
         urlBase = urlBase + "%2C%20";
+        urlBase = urlBase + day;
+        urlBase = urlBase  + "%20" + dateMap.get(month);
+        urlBase = urlBase + "%20" + year;
+        urlBase = urlBase + "%2000%3A00%3A00%20GMT%22%7D";
+
+
+        Log.e("Here is the URL:",urlBase);
 
 
         try {
-            URL url = new URL("http://google.com");
+            URL url = new URL(urlBase);
+
+            //Get JSON object from URL
+
+            InputStream in = url.openStream();
+            String jsonString = IOUtils.toString(in,"UTF-8");
+
+            JSONObject jsonResponse = new JSONObject(jsonString);
+            JSONArray arr = jsonResponse.getJSONArray("_items");
+            Log.e("Here be things: ",arr.toString());
+
+
         }
         catch(Exception e) {
             Log.e("Error:",e.getMessage());
