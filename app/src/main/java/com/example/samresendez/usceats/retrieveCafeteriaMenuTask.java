@@ -41,8 +41,9 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
         int year = now.get(Calendar.YEAR);
         int dayOfWeek = now.get(Calendar.DAY_OF_WEEK);
         int month = now.get(Calendar.MONTH);
-        int hourOfDay = now.get(Calendar.HOUR);
         int day = now.get(Calendar.DATE);
+
+        int hourOfDay = now.get(Calendar.HOUR);
 
         Log.e("Hour, Weekday, month:",Integer.toString(hourOfDay)+Integer.toString(dayOfWeek)+Integer.toString(month));
 
@@ -84,15 +85,36 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
 
         try {
             URL url = new URL(urlBase);
-
             //Get JSON object from URL
 
             InputStream in = url.openStream();
             String jsonString = IOUtils.toString(in,"UTF-8");
 
             JSONObject jsonResponse = new JSONObject(jsonString);
-            JSONArray arr = jsonResponse.getJSONArray("_items");
-            Log.e("Here be things: ",arr.toString());
+            JSONArray arr = jsonResponse.getJSONArray("_items"); //Split up into different cafeterias (I think?)
+
+            int mealNumber = 0;
+
+            if(hourOfDay > 10 && hourOfDay < 16) {
+                mealNumber = 1;
+            }
+            else{
+                mealNumber = 2;
+            }
+
+            Log.e("Size of arr: ",Integer.toString(arr.length()));
+            for(int i = 0; i < arr.length(); i ++ ) {
+                Log.e("Inside Loop","We are looping. Lol");
+
+                JSONArray mealObject = arr.getJSONObject(i).getJSONArray("meals").getJSONObject(mealNumber).getJSONArray("meal_sections");
+                Log.e("Heaven help me: ",mealObject.toString());
+
+
+
+            }
+
+
+
 
 
         }
