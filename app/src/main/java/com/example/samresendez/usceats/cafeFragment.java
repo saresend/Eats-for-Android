@@ -65,7 +65,7 @@ public class cafeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.menuListRecyclerView);
         mLayoutManager = new LinearLayoutManager(this.getContext());
-        //mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         if (getArguments() != null) {
             cafeName = getArguments().getString(ARG_PARAM1);

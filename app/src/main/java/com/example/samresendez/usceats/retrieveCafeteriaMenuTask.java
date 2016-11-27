@@ -113,10 +113,6 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
 
             }
 
-
-
-
-
         }
         catch(Exception e) {
             Log.e("Error:",e.getMessage());
