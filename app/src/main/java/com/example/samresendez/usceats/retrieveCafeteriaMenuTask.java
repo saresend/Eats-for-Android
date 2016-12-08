@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,9 @@ import java.util.Map;
 
 public class retrieveCafeteriaMenuTask extends AsyncTask {
 
+    ArrayList<String> evkList = new ArrayList<>();
+    ArrayList<String> parksideList = new ArrayList<>();
+    ArrayList<String> cafeList = new ArrayList<>();
 
     @Override
     protected Object doInBackground(Object[] objects) {
@@ -79,6 +83,8 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
         urlBase = urlBase + "%20" + year;
         urlBase = urlBase + "%2000%3A00%3A00%20GMT%22%7D";
 
+        //Just here for testing, pls remove for actual functionality
+        urlBase = "https://uscdata.org/eats/v1/menus?where=%7B%22date%22%3A%20%22Mon%2C%2025%20Apr%202016%2000%3A00%3A00%20GMT%22%7D";
 
         Log.e("Here is the URL:",urlBase);
 
@@ -107,11 +113,29 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
                 Log.e("Inside Loop","We are looping. Lol");
 
                 JSONArray mealObject = arr.getJSONObject(i).getJSONArray("meals").getJSONObject(mealNumber).getJSONArray("meal_sections");
-                Log.e("Heaven help me: ",mealObject.toString());
+                JSONArray foodArray = mealObject.getJSONObject(0).getJSONArray("section_items");
+                JSONObject object = foodArray.getJSONObject(0);
 
+                for(int j =0; j < foodArray.length(); j++) {
 
+                    Log.e("Heres the item",foodArray.getJSONObject(j).toString());
+                    JSONObject obj = foodArray.getJSONObject(j);
+                    if(i==0) {
+                        evkList.add(obj.getString("food_name"));
+                    }
+                    else if(i==1) {
+                        parksideList.add(obj.getString("food_name"));
 
+                    }
+                    else if(j==2) {
+                        cafeList.add(obj.getString("food_name"));
+                    }
+                }
             }
+            Log.e("We're here","Printing out lists");
+            Log.e("EVK: ", evkList.toString());
+            Log.e("Parkside: ", parksideList.toString());
+            Log.e("cafe 84: ",cafeList.toString());
 
         }
         catch(Exception e) {

@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +30,7 @@ public class cafeFragment extends Fragment {
 
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private menuAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
 
@@ -62,10 +64,9 @@ public class cafeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
-        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.menuListRecyclerView);
-        mLayoutManager = new LinearLayoutManager(this.getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
 
         if (getArguments() != null) {
             cafeName = getArguments().getString(ARG_PARAM1);
@@ -84,18 +85,67 @@ public class cafeFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         CardView cardView = (CardView) this.getView().findViewById(R.id.titleCard);
         TextView cardTitle = (TextView) cardView.findViewById(R.id.cardTextView);
+
+        ArrayList<String> data = new ArrayList<>();
+
+        data.add("Hello");
+        data.add("Please work");
+        data.add("God blesserino");
+        data.add("Hello");
+        data.add("Please work");
+        data.add("God blesserino");
+        data.add("Hello");
+        data.add("Please work");
+        data.add("God blesserino");
+
+        mRecyclerView = (RecyclerView) getView().findViewById(R.id.menuListRecyclerView);
+
         cardTitle.setText(cafeName);
         if(cafeName == "EVK") {
             cardView.setBackground(getContext().getDrawable(R.mipmap.evkimage));
             this.getView().setBackgroundColor(Color.parseColor("#4CAF50"));
+
+            mLayoutManager = new LinearLayoutManager(getContext());
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            mLayoutManager = new LinearLayoutManager(getContext());
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            mAdapter = new menuAdapter();
+            mAdapter.dataSet = data;
+            mRecyclerView.setAdapter(mAdapter);
+
         }
         else if(cafeName == "Parkside") {
             cardView.setBackground(getContext().getDrawable(R.mipmap.parkside));
             this.getView().setBackgroundColor(Color.parseColor("#FF9800"));
+
+
+
+
+            mLayoutManager = new LinearLayoutManager(getContext());
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            mLayoutManager = new LinearLayoutManager(getContext());
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            mAdapter = new menuAdapter();
+            mAdapter.dataSet = data;
+            mRecyclerView.setAdapter(mAdapter);
         }
         else if(cafeName == "Cafe 84") {
             cardView.setBackground(getContext().getDrawable(R.mipmap.cafe84));
             this.getView().setBackgroundColor(Color.parseColor("#03A9F4"));
+
+            mLayoutManager = new LinearLayoutManager(getContext());
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            mLayoutManager = new LinearLayoutManager(getContext());
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            mAdapter = new menuAdapter();
+            mAdapter.dataSet = data;
+            mRecyclerView.setAdapter(mAdapter);
         }
 
         super.onViewCreated(view, savedInstanceState);

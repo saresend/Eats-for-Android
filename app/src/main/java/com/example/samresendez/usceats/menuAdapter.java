@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class menuAdapter extends RecyclerView.Adapter {
 
-    ArrayList<menuItem> dataSet = new ArrayList<>();
+    ArrayList<String> dataSet = new ArrayList<>();
 
     public static class menuViewHolder extends RecyclerView.ViewHolder {
 
@@ -22,7 +22,7 @@ public class menuAdapter extends RecyclerView.Adapter {
 
         menuViewHolder(View itemView) {
             super(itemView);
-            menuNameView = (TextView) itemView.findViewById(R.id.menuTextView);
+            menuNameView = (TextView) itemView.findViewById(R.id.menuItemName);
 
         }
 
@@ -31,9 +31,9 @@ public class menuAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(menuViewHolder holder, int position) {
-        menuItem item = dataSet.get(position);
-        holder.menuNameView.setText(item.itemName);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        menuViewHolder relItem = (menuViewHolder) holder;
+        relItem.menuNameView.setText(dataSet.get(position));
     }
 
     @Override
@@ -43,9 +43,10 @@ public class menuAdapter extends RecyclerView.Adapter {
 
     @Override
     public menuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.menuitem,parent,false);
 
+        menuViewHolder holder = new menuViewHolder(v);
 
-        return null;
+        return holder;
     }
 }
