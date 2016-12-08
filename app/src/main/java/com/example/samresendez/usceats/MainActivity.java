@@ -22,10 +22,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
 
     private Integer sectionNumber;
+
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -79,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new retrieveCafeteriaMenuTask().execute();
+       // new retrieveCafeteriaMenuTask().execute();
     }
 
     @Override

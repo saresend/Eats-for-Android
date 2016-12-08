@@ -25,6 +25,12 @@ import java.util.Map;
 
 public class retrieveCafeteriaMenuTask extends AsyncTask {
 
+    menuAdapter adapter;
+
+    ArrayList<String> evk;
+    ArrayList<String> parkside;
+    ArrayList<String> cafe;
+
     ArrayList<String> evkList = new ArrayList<>();
     ArrayList<String> parksideList = new ArrayList<>();
     ArrayList<String> cafeList = new ArrayList<>();
@@ -143,5 +149,16 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
         }
 
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Object o) {
+        //super.onPostExecute(o);
+        evk = evkList;
+        cafe = cafeList;
+        parkside = parksideList;
+        adapter.dataSet = parkside;
+
+
     }
 }

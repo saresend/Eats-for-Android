@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 public class menuAdapter extends RecyclerView.Adapter {
 
+
+
+
     ArrayList<String> dataSet = new ArrayList<>();
 
     public static class menuViewHolder extends RecyclerView.ViewHolder {
@@ -38,6 +41,9 @@ public class menuAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
+        if(dataSet == null) {
+            return 0;
+        }
         return dataSet.size();
     }
 
