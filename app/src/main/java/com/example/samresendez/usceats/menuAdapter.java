@@ -15,8 +15,6 @@ import java.util.ArrayList;
 public class menuAdapter extends RecyclerView.Adapter {
 
 
-
-
     ArrayList<String> dataSet = new ArrayList<>();
 
     public static class menuViewHolder extends RecyclerView.ViewHolder {

@@ -52,6 +52,7 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
         int dayOfWeek = now.get(Calendar.DAY_OF_WEEK);
         int month = now.get(Calendar.MONTH);
         int day = now.get(Calendar.DATE);
+        int a = now.get(Calendar.AM_PM);
 
         int hourOfDay = now.get(Calendar.HOUR);
 
@@ -68,29 +69,28 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
         weekMap.put(7,"Sat");
 
         Map<Integer,String> dateMap = new HashMap<>();
-        dateMap.put(1,"Jan");
-        dateMap.put(2,"Feb");
-        dateMap.put(3,"Mar");
-        dateMap.put(4,"Apr");
-        dateMap.put(5,"May");
-        dateMap.put(6,"Jun");
-        dateMap.put(7,"Jul");
-        dateMap.put(8,"Aug");
-        dateMap.put(9,"Sep");
-        dateMap.put(10,"Oct");
-        dateMap.put(11,"Nov");
-        dateMap.put(12,"Dec");
+        dateMap.put(0,"Jan");
+        dateMap.put(1,"Feb");
+        dateMap.put(2,"Mar");
+        dateMap.put(3,"Apr");
+        dateMap.put(4,"May");
+        dateMap.put(5,"Jun");
+        dateMap.put(6,"Jul");
+        dateMap.put(7,"Aug");
+        dateMap.put(8,"Sep");
+        dateMap.put(9,"Oct");
+        dateMap.put(10,"Nov");
+        dateMap.put(11,"Dec");
 
         String urlBase = "https://uscdata.org/eats/v1/menus?where=%7B%22date%22%3A%20%22";
         urlBase = urlBase + weekMap.get(dayOfWeek);
+        Log.e("This is the day",Integer.toString(dayOfWeek));
         urlBase = urlBase + "%2C%20";
         urlBase = urlBase + day;
         urlBase = urlBase  + "%20" + dateMap.get(month);
+        Log.e("This is the month",Integer.toString(month));
         urlBase = urlBase + "%20" + year;
         urlBase = urlBase + "%2000%3A00%3A00%20GMT%22%7D";
-
-        //Just here for testing, pls remove for actual functionality
-        urlBase = "https://uscdata.org/eats/v1/menus?where=%7B%22date%22%3A%20%22Mon%2C%2025%20Apr%202016%2000%3A00%3A00%20GMT%22%7D";
 
         Log.e("Here is the URL:",urlBase);
 
@@ -105,34 +105,45 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
             JSONObject jsonResponse = new JSONObject(jsonString);
             JSONArray arr = jsonResponse.getJSONArray("_items"); //Split up into different cafeterias (I think?)
 
-            int mealNumber = 0;
-
-            if(hourOfDay > 10 && hourOfDay < 16) {
-                mealNumber = 1;
+            for(int i = 0; i < arr.length(); i++) {
+                Log.e("Here's the raw array",arr.get(i).toString());
             }
-            else{
+
+
+            int mealNumber = 0;
+            if(a == Calendar.AM) {
+                //Sets the time if its in the morning
+                if(hourOfDay > 11) {
+                    mealNumber = 1;
+                }
+            }
+            else if(hourOfDay > 11 && hourOfDay <= 16) {
+                  mealNumber = 1;
+
+            }
+            else {
                 mealNumber = 2;
             }
-
             Log.e("Size of arr: ",Integer.toString(arr.length()));
             for(int i = 0; i < arr.length(); i ++ ) {
-                Log.e("Inside Loop","We are looping. Lol");
+                if(arr.getJSONObject(i).getJSONArray("meals").length() != 0) {
+                    JSONArray mealObject = arr.getJSONObject(i).getJSONArray("meals").getJSONObject(mealNumber).getJSONArray("meal_sections");
+                    Log.e("Testing for bugs", "Before or after?");
+                    for (int k = 0; k < mealObject.length(); k++) {
+                        JSONArray foodArray = mealObject.getJSONObject(k).getJSONArray("section_items");
+                        for (int j = 0; j < foodArray.length(); j++) {
 
-                JSONArray mealObject = arr.getJSONObject(i).getJSONArray("meals").getJSONObject(mealNumber).getJSONArray("meal_sections");
+                            Log.e("Heres the item", foodArray.getJSONObject(j).toString());
+                            Log.e("At this index", Integer.toString(i));
+                            JSONObject obj = foodArray.getJSONObject(j);
+                            if (i == 0) {
+                                parksideList.add(obj.getString("food_name"));
+                            } else if (i == 1) {
+                                cafeList.add(obj.getString("food_name"));
 
-                for(int k =0; k < mealObject.length(); k++) {
-                    JSONArray foodArray = mealObject.getJSONObject(k).getJSONArray("section_items");
-                    for (int j = 0; j < foodArray.length(); j++) {
-
-                        Log.e("Heres the item", foodArray.getJSONObject(j).toString());
-                        JSONObject obj = foodArray.getJSONObject(j);
-                        if (i == 0) {
-                            evkList.add(obj.getString("food_name"));
-                        } else if (i == 1) {
-                            parksideList.add(obj.getString("food_name"));
-
-                        } else if (j == 2) {
-                            cafeList.add(obj.getString("food_name"));
+                            } else if (i == 2) {
+                                evkList.add(obj.getString("food_name"));
+                            }
                         }
                     }
                 }
