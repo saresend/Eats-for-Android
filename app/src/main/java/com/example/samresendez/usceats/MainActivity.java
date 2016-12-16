@@ -28,8 +28,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
 
-    private Integer sectionNumber;
-
+    private ArrayList<String> data = new ArrayList<>();
 
 
     /**
@@ -67,17 +66,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startCheckinActivity = new Intent(getApplicationContext(), CheckInActivity.class);
-
-                startActivity(startCheckinActivity);
-            }
-        });
 
     }
 
@@ -165,6 +153,17 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+
+
+            data.add("Hello");
+            data.add("Please work");
+            data.add("God blesserino");
+            data.add("Hello");
+            data.add("Please work");
+            data.add("God blesserino");
+            data.add("Hello");
+            data.add("Please work");
+            data.add("God blesserino");
             switch(position) {
                 case 0:
                     //Return Left Most One

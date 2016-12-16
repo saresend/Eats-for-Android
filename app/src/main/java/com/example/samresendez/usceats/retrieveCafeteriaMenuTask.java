@@ -1,6 +1,7 @@
 package com.example.samresendez.usceats;
 
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.StringBuilderPrinter;
 
@@ -25,11 +26,10 @@ import java.util.Map;
 
 public class retrieveCafeteriaMenuTask extends AsyncTask {
 
+    String cafeName;
     menuAdapter adapter;
+    ArrayList<ArrayList<String>> mArrayList;
 
-    ArrayList<String> evk;
-    ArrayList<String> parkside;
-    ArrayList<String> cafe;
 
     ArrayList<String> evkList = new ArrayList<>();
     ArrayList<String> parksideList = new ArrayList<>();
@@ -119,22 +119,21 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
                 Log.e("Inside Loop","We are looping. Lol");
 
                 JSONArray mealObject = arr.getJSONObject(i).getJSONArray("meals").getJSONObject(mealNumber).getJSONArray("meal_sections");
-                JSONArray foodArray = mealObject.getJSONObject(0).getJSONArray("section_items");
-                JSONObject object = foodArray.getJSONObject(0);
 
-                for(int j =0; j < foodArray.length(); j++) {
+                for(int k =0; k < mealObject.length(); k++) {
+                    JSONArray foodArray = mealObject.getJSONObject(k).getJSONArray("section_items");
+                    for (int j = 0; j < foodArray.length(); j++) {
 
-                    Log.e("Heres the item",foodArray.getJSONObject(j).toString());
-                    JSONObject obj = foodArray.getJSONObject(j);
-                    if(i==0) {
-                        evkList.add(obj.getString("food_name"));
-                    }
-                    else if(i==1) {
-                        parksideList.add(obj.getString("food_name"));
+                        Log.e("Heres the item", foodArray.getJSONObject(j).toString());
+                        JSONObject obj = foodArray.getJSONObject(j);
+                        if (i == 0) {
+                            evkList.add(obj.getString("food_name"));
+                        } else if (i == 1) {
+                            parksideList.add(obj.getString("food_name"));
 
-                    }
-                    else if(j==2) {
-                        cafeList.add(obj.getString("food_name"));
+                        } else if (j == 2) {
+                            cafeList.add(obj.getString("food_name"));
+                        }
                     }
                 }
             }
@@ -154,11 +153,21 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         //super.onPostExecute(o);
-        evk = evkList;
-        cafe = cafeList;
-        parkside = parksideList;
-        adapter.dataSet = parkside;
-
-
+        mArrayList.add(evkList);
+        mArrayList.add(parksideList);
+        mArrayList.add(cafeList);
+        if(cafeName == "EVK") {
+            Log.e("Here we are","EVK is called");
+            adapter.dataSet = evkList;
+            adapter.notifyDataSetChanged();
+        }
+        else if(cafeName == "Cafe 84") {
+            adapter.dataSet = cafeList;
+            adapter.notifyDataSetChanged();
+        }
+        else if(cafeName == "Parkside") {
+            adapter.dataSet = parksideList;
+            adapter.notifyDataSetChanged();
+        }
     }
 }

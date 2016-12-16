@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -28,11 +30,6 @@ import java.util.ArrayList;
  */
 public class cafeFragment extends Fragment {
 
-
-    private ArrayList<String> evk;
-    private ArrayList<String> parkside;
-    private ArrayList<String> cafe;
-
     private RecyclerView mRecyclerView;
     private menuAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -41,6 +38,7 @@ public class cafeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "cafeName";
 
+    private ArrayList<ArrayList<String>>  dataSet;
     private String cafeName;
 
     public cafeFragment() {
@@ -68,16 +66,19 @@ public class cafeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mAdapter = new menuAdapter();
-        retrieveCafeteriaMenuTask task = new retrieveCafeteriaMenuTask();
-        task.evk = this.evk;
-        task.parkside = this.parkside;
-        task.cafe = this.cafe;
-        task.adapter = this.mAdapter;
+        dataSet = new ArrayList<>();
 
-        task.execute();
+
 
         if (getArguments() != null) {
             cafeName = getArguments().getString(ARG_PARAM1);
+
+            retrieveCafeteriaMenuTask task = new retrieveCafeteriaMenuTask();
+            task.adapter = this.mAdapter;
+            task.cafeName = this.cafeName;
+            task.mArrayList = this.dataSet;
+            Log.e("Firing: ", "Menu Async Fired");
+            task.execute();
         }
     }
 
@@ -94,17 +95,7 @@ public class cafeFragment extends Fragment {
         CardView cardView = (CardView) this.getView().findViewById(R.id.titleCard);
         TextView cardTitle = (TextView) cardView.findViewById(R.id.cardTextView);
 
-        ArrayList<String> data = new ArrayList<>();
 
-        data.add("Hello");
-        data.add("Please work");
-        data.add("God blesserino");
-        data.add("Hello");
-        data.add("Please work");
-        data.add("God blesserino");
-        data.add("Hello");
-        data.add("Please work");
-        data.add("God blesserino");
 
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.menuListRecyclerView);
 
@@ -113,13 +104,13 @@ public class cafeFragment extends Fragment {
             cardView.setBackground(getContext().getDrawable(R.mipmap.evkimage));
             this.getView().setBackgroundColor(Color.parseColor("#4CAF50"));
 
-            mLayoutManager = new LinearLayoutManager(getContext());
+            mLayoutManager = new LinearLayoutManager(getView().getContext());
             mRecyclerView.setLayoutManager(mLayoutManager);
 
             mLayoutManager = new LinearLayoutManager(getContext());
             mRecyclerView.setLayoutManager(mLayoutManager);
 
-            mAdapter.dataSet = evk;
+            //mAdapter.dataSet = dataSet.get(0);
             mRecyclerView.setAdapter(mAdapter);
 
         }
@@ -128,13 +119,13 @@ public class cafeFragment extends Fragment {
             this.getView().setBackgroundColor(Color.parseColor("#FF9800"));
 
 
-            mLayoutManager = new LinearLayoutManager(getContext());
+            mLayoutManager = new LinearLayoutManager(getView().getContext());
             mRecyclerView.setLayoutManager(mLayoutManager);
 
-            mLayoutManager = new LinearLayoutManager(getContext());
+            mLayoutManager = new LinearLayoutManager(getView().getContext());
             mRecyclerView.setLayoutManager(mLayoutManager);
 
-            mAdapter.dataSet = parkside;
+           // mAdapter.dataSet = dataSet.get(1);
             mRecyclerView.setAdapter(mAdapter);
         }
         else if(cafeName == "Cafe 84") {
@@ -147,7 +138,7 @@ public class cafeFragment extends Fragment {
             mLayoutManager = new LinearLayoutManager(getContext());
             mRecyclerView.setLayoutManager(mLayoutManager);
 
-            mAdapter.dataSet = cafe;
+           // mAdapter.dataSet = dataSet.get(2);
             mRecyclerView.setAdapter(mAdapter);
         }
 
