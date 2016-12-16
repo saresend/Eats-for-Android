@@ -77,7 +77,7 @@ public class cafeFragment extends Fragment {
             task.adapter = this.mAdapter;
             task.cafeName = this.cafeName;
             task.mArrayList = this.dataSet;
-            Log.e("Firing: ", "Menu Async Fired");
+            task.mContext = getContext();
             task.execute();
         }
     }

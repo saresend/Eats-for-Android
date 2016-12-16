@@ -1,9 +1,11 @@
 package com.example.samresendez.usceats;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.StringBuilderPrinter;
+import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
@@ -28,6 +30,7 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
 
     String cafeName;
     menuAdapter adapter;
+    Context mContext;
     ArrayList<ArrayList<String>> mArrayList;
 
 
@@ -171,14 +174,26 @@ public class retrieveCafeteriaMenuTask extends AsyncTask {
             Log.e("Here we are","EVK is called");
             adapter.dataSet = evkList;
             adapter.notifyDataSetChanged();
+            if(evkList.size() == 0) {
+                Toast toast = Toast.makeText(mContext,"Error getting food data :(",Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
         else if(cafeName == "Cafe 84") {
             adapter.dataSet = cafeList;
             adapter.notifyDataSetChanged();
+            if(cafeList.size() == 0) {
+                Toast toast = Toast.makeText(mContext,"Error getting food data :(",Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
         else if(cafeName == "Parkside") {
             adapter.dataSet = parksideList;
             adapter.notifyDataSetChanged();
+            if(parksideList.size() == 0) {
+                Toast toast = Toast.makeText(mContext,"Error getting food data :(",Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
     }
 }
